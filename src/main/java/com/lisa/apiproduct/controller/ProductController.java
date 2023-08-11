@@ -49,4 +49,15 @@ public class ProductController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @RequestMapping(value = "/product/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteProduct(@PathVariable(value = "id") Long id) {
+        return productRepository.findById(id)
+                .map(product -> {
+                    productRepository.deleteById(id);
+                    return new ResponseEntity<>(HttpStatus.OK);
+                })
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+
+    }
+
 }
