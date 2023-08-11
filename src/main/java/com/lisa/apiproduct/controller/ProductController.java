@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class ProductController {
 
@@ -19,6 +21,11 @@ public class ProductController {
     @RequestMapping(value = "/product", method = RequestMethod.POST)
     public ResponseEntity<Product> save(@RequestBody Product product) {
         return new ResponseEntity<>(productRepository.save(product), HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/products", method = RequestMethod.GET)
+    public List<Product> allProducts() {
+        return productRepository.findAll();
     }
 
 }
