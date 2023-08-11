@@ -34,4 +34,19 @@ public class ProductController {
                 .orElseGet(()-> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @RequestMapping(value = "/product/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Product> updateProduct(@PathVariable(value = "id") Long id, @RequestBody Product product) {
+        return productRepository.findById(id)
+                .map(productFound -> {
+                    productFound.setName(product.getName() == null ? productFound.getName() : product.getName());
+                    productFound.setDescription(product.getDescription() == null ? productFound.getDescription() : product.getDescription());
+                    productFound.setPrice(product.getPrice() == null ? productFound.getPrice() : product.getPrice());
+                    productFound.setAmount(product.getAmount() == null ? productFound.getAmount() : product.getAmount());
+
+                    Product updateProduct = productRepository.save(productFound);
+                    return new ResponseEntity<>(updateProduct, HttpStatus.OK);
+                })
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
 }
