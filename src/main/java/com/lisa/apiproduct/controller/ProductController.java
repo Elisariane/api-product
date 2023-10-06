@@ -2,6 +2,7 @@ package com.lisa.apiproduct.controller;
 
 import com.lisa.apiproduct.model.Product;
 import com.lisa.apiproduct.repository.ProductRepository;
+import com.lisa.apiproduct.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,9 @@ public class ProductController {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private ProductService productService;
+
     @RequestMapping(value = "/product", method = RequestMethod.POST)
     public ResponseEntity<Product> save(@RequestBody Product product) {
         return new ResponseEntity<>(productRepository.save(product), HttpStatus.CREATED);
@@ -24,6 +28,11 @@ public class ProductController {
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public List<Product> allProducts() {
         return productRepository.findAll();
+    }
+
+    @RequestMapping(value = "/atLeastOneProduct", method = RequestMethod.GET)
+    public List<Product> allProductsWithOneQuantityInStock() {
+        return productService.allProductsWithAmouytnIsEqualOne();
     }
 
     @RequestMapping(value = "/product/{id}", method = RequestMethod.GET)

@@ -1,12 +1,14 @@
 package com.lisa.apiproduct.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Table(name = "product")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Product {
 
@@ -20,5 +22,6 @@ public class Product {
     private Double price;
     @Column(nullable = false)
     private Integer amount;
+
 
 }
